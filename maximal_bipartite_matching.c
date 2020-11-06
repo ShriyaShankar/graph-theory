@@ -2,33 +2,16 @@
 #include<stdbool.h>
 #include <string.h> 
 
-#define M 6 
-#define N 6 
-
-// A DFS based recursive function 
-// that returns true if a matching 
-// for vertex u is possible 
-bool bpm(bool bpGraph[M][N], int u, 
+bool bpm(int m, int n, bool bpGraph[m][n], int u, 
 		bool seen[], int matchR[]) 
-{ 
-	// Try every job one by one 
-	for (int v = 0; v < N; v++) 
+{  
+	for (int v = 0; v < n; v++) 
 	{ 
-		// If applicant u is interested in 
-		// job v and v is not visited 
+		
 		if (bpGraph[u][v] && !seen[v]) 
 		{ 
-			// Mark v as visited 
-			seen[v] = true; 
-
-			// If job 'v' is not assigned to an 
-			// applicant OR previously assigned 
-			// applicant for job v (which is matchR[v]) 
-			// has an alternate job available. 
-			// Since v is marked as visited in 
-			// the above line, matchR[v] in the following 
-			// recursive call will not get job 'v' again 
-			if (matchR[v] < 0 || bpm(bpGraph, matchR[v], 
+			seen[v] = true;  
+			if (matchR[v] < 0 || bpm(m, n, bpGraph, matchR[v], 
 									seen, matchR)) 
 			{ 
 				matchR[v] = u; 
@@ -39,32 +22,18 @@ bool bpm(bool bpGraph[M][N], int u,
 	return false; 
 } 
 
-// Returns maximum number 
-// of matching from M to N 
-int maxBPM(bool bpGraph[M][N]) 
-{ 
-	// An array to keep track of the 
-	// applicants assigned to jobs. 
-	// The value of matchR[i] is the 
-	// applicant number assigned to job i, 
-	// the value -1 indicates nobody is 
-	// assigned. 
-	int matchR[N]; 
-
-	// Initially all jobs are available 
+int maxBPM(int m, int n, bool bpGraph[m][n]) 
+{  
+	int matchR[n]; 
 	memset(matchR, -1, sizeof(matchR)); 
 
-	// Count of jobs assigned to applicants 
 	int result = 0; 
-	for (int u = 0; u < M; u++) 
+	for (int u = 0; u < m; u++) 
 	{ 
-		// Mark all jobs as not seen 
-		// for next applicant. 
-		bool seen[N]; 
+		bool seen[n]; 
 		memset(seen, 0, sizeof(seen)); 
 
-		// Find if the applicant 'u' can get a job 
-		if (bpm(bpGraph, u, seen, matchR)) 
+		if (bpm(m, n, bpGraph, u, seen, matchR)) 
 			result++; 
 	} 
 	return result; 
@@ -72,13 +41,27 @@ int maxBPM(bool bpGraph[M][N])
 
 int main() 
 { 
-	bool bpGraph[M][N] = {{0, 1, 1, 0, 0, 0}, 
+
+    // INPUT FORMAT
+  /*  int m=5, n=6;
+    bool bpGraph[m][n];
+    memset(bpGraph, 0, m*n*sizeof(bool));
+    int data;
+    for(int i=0; i<m; ++i)
+    {
+        for(int j=0; j<n; ++j)
+        {
+            scanf("%d", &data);
+            bpGraph[i][j] = data;
+        }
+    } */
+
+/*	bpGraph[m][n] = {{0, 1, 1, 0, 0, 0}, 
 						{1, 0, 0, 1, 0, 0}, 
 						{0, 0, 1, 0, 0, 0}, 
 						{0, 0, 1, 1, 0, 0}, 
-						{0, 0, 0, 0, 0, 0}, 
-						{0, 0, 0, 0, 0, 1}}; 
-
-	printf("Max applicants matched = %d\n", maxBPM(bpGraph)); 
+						{0, 0, 1, 0, 0, 0}}; */
+    
+	printf("Max applicants matched = %d\n", maxBPM(m, n, bpGraph)); 
 	return 0; 
 } 
