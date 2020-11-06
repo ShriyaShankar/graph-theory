@@ -43,7 +43,9 @@ int main()
 { 
 
     // INPUT FORMAT
-  /*  int m=5, n=6;
+      int m,n;
+    scanf("%d", &m);
+    scanf("%d", &n);
     bool bpGraph[m][n];
     memset(bpGraph, 0, m*n*sizeof(bool));
     int data;
@@ -54,7 +56,9 @@ int main()
             scanf("%d", &data);
             bpGraph[i][j] = data;
         }
-    } */
+    }
+    int ans;
+    scanf("%d", &ans);
 
 /*	bpGraph[m][n] = {{0, 1, 1, 0, 0, 0}, 
 						{1, 0, 0, 1, 0, 0}, 
@@ -62,6 +66,6 @@ int main()
 						{0, 0, 1, 1, 0, 0}, 
 						{0, 0, 1, 0, 0, 0}}; */
     
-	printf("Max applicants matched = %d\n", maxBPM(m, n, bpGraph)); 
+	printf("Max applicants matched = %d\ncorrect ans = %d\n", maxBPM(m, n, bpGraph), ans);
 	return 0; 
 } 
